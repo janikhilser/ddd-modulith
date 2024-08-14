@@ -1,0 +1,21 @@
+{% extends '@loan/base.html.twig' %}
+
+{% block body %}
+
+    <h1>Loan</h1>
+
+    <a href="{{ path('loan_book_show_buy') }}">Buy book</a>
+
+    <p>Available books:</p>
+    {% if books is not empty %}
+        <ul>
+            {% for book in books %}
+                <li>{{ book.id }} | {{ book.countOfLoans }} | <a href="{{ path('loan_book_detail', {'id': book.id}) }}">Show details</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books found.</p>
+    {% endif %}
+
+{% endblock %}

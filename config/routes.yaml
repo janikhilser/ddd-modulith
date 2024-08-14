@@ -1,0 +1,56 @@
+common_controllers:
+  resource:
+    path: ../src/Common/Infrastructure/Controller/
+    namespace: App\Common\Infrastructure\Controller
+  type: attribute
+
+search_controllers:
+  resource:
+    path: ../src/Search/Infrastructure/Controller/
+    namespace: App\Search\Infrastructure\Controller
+  type: attribute
+
+loan_controllers:
+  resource:
+    path: ../src/Loan/Infrastructure/Controller/
+    namespace: App\Loan\Infrastructure\Controller
+  type: attribute
+
+when@test:
+  test1_controllers:
+    resource:
+      path: ../tests/TestData/TestModule1/Infrastructure/Controller/
+      namespace: App\Tests\TestData\TestModule1\Infrastructure\Controller
+    type: attribute
+
+  test2_controllers:
+    resource:
+      path: ../tests/TestData/TestModule2/Infrastructure/Controller/
+      namespace: App\Tests\TestData\TestModule2\Infrastructure\Controller
+    type: attribute
+
+# static routes
+overview:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: '@common/overview.html.twig'
+
+overview_search:
+  path: /search
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: '@search/overview.html.twig'
+
+overview_loan:
+  path: /loan
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: '@loan/overview.html.twig'
+
+not_found:
+  path: '/{catchall}'
+  controller: App\Common\Infrastructure\Controller\NotFoundController::index
+  requirements:
+    catchall: '.*'
+

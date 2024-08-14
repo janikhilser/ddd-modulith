@@ -1,0 +1,134 @@
+doctrine:
+  dbal:
+    connections:
+      common:
+        # configure these for your database server
+        url: '%env(resolve:DATABASE_URL_COMMON)%'
+        use_savepoints: true
+        profiling_collect_backtrace: '%kernel.debug%'
+      search:
+        # configure these for your database server
+        url: '%env(resolve:DATABASE_URL_SEARCH)%'
+        use_savepoints: true
+        profiling_collect_backtrace: '%kernel.debug%'
+      loan:
+        # configure these for your database server
+        url: '%env(resolve:DATABASE_URL_LOAN)%'
+        use_savepoints: true
+        profiling_collect_backtrace: '%kernel.debug%'
+    types:
+      loan_publication_id: App\Loan\Infrastructure\Persistence\Type\PublicationIdType
+      loan_book_id: App\Loan\Infrastructure\Persistence\Type\BookIdType
+      loan_loan_id: App\Loan\Infrastructure\Persistence\Type\LoanIdType
+
+      search_book_id: App\Search\Infrastructure\Persistence\Type\BookIdType
+  orm:
+    auto_generate_proxy_classes: true
+    enable_lazy_ghost_objects: true
+    entity_managers:
+      common:
+        connection: common
+        mappings:
+          Common:
+            is_bundle: false
+            type: xml
+            dir: '%kernel.project_dir%/src/Common/Infrastructure/Persistence/Entity'
+            prefix: 'App\Common\Infrastructure'
+            alias: Common
+        report_fields_where_declared: true
+        validate_xml_mapping: true
+        naming_strategy: doctrine.orm.naming_strategy.default
+        auto_mapping: false
+      search:
+        connection: search
+        mappings:
+          Search:
+            is_bundle: false
+            type: xml
+            dir: '%kernel.project_dir%/src/Search/Infrastructure/Persistence/Entity'
+            prefix: 'App\Search\Domain'
+            alias: Search
+        report_fields_where_declared: true
+        validate_xml_mapping: true
+        naming_strategy: doctrine.orm.naming_strategy.default
+        auto_mapping: false
+      loan:
+        connection: loan
+        mappings:
+          Loan:
+            is_bundle: false
+            type: xml
+            dir: '%kernel.project_dir%/src/Loan/Infrastructure/Persistence/Entity'
+            prefix: 'App\Loan\Domain'
+            alias: Loan
+        report_fields_where_declared: true
+        validate_xml_mapping: true
+        naming_strategy: doctrine.orm.naming_strategy.default
+        auto_mapping: false
+
+when@prod:
+  doctrine:
+    orm:
+      auto_generate_proxy_classes: false
+      proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+      query_cache_driver:
+        type: pool
+        pool: doctrine.system_cache_pool
+      result_cache_driver:
+        type: pool
+        pool: doctrine.result_cache_pool
+
+  framework:
+    cache:
+      pools:
+        doctrine.result_cache_pool:
+          adapter: cache.app
+        doctrine.system_cache_pool:
+          adapter: cache.system
+
+when@test:
+  doctrine:
+    dbal:
+      connections:
+        test_module_1:
+          # configure these for your database server
+          url: '%env(resolve:DATABASE_URL_TEST_MODULE_1)%'
+          dbname: test_module_1
+        test_module_2:
+          # configure these for your database server
+          url: '%env(resolve:DATABASE_URL_TEST_MODULE_2)%'
+          dbname: test_module_2
+        test_server_not_existing:
+          # configure these for your database server
+          url: 'mysql://root:db_password@127.0.0.1:12345/testServerNotExisting?serverVersion=10.11.2-MariaDB&charset=utf8mb4'
+          dbname: test_server_not_existing
+        test_database_not_existing:
+          # configure these for your database server
+          url: '%env(resolve:DATABASE_URL_TEST_DATABASE_NOT_EXISTING)%'
+          dbname: test_database_not_existing
+      types:
+        test_module_1_dummy_id: App\Tests\TestData\TestModule1\Infrastructure\Persistence\Type\DummyIdType
+    orm:
+      entity_managers:
+        test_module_1:
+          connection: test_module_1
+          mappings:
+            TestModule1:
+              is_bundle: false
+              type: xml
+              dir: '%kernel.project_dir%/tests/TestData/TestModule1/Infrastructure/Persistence/Entity'
+              prefix: 'App\Tests\TestData\TestModule1\Domain'
+              alias: TestModule1
+        test_module_2:
+          connection: test_module_2
+          mappings:
+            TestModule2:
+              is_bundle: false
+              type: xml
+              dir: '%kernel.project_dir%/tests/TestData/TestModule2/Infrastructure/Persistence/Entity'
+              prefix: 'App\Tests\TestData\TestModule2\Domain'
+              alias: TestModule2
+        test_server_not_existing:
+          connection: test_server_not_existing
+        test_database_not_existing:
+          connection: test_database_not_existing

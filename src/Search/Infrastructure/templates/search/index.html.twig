@@ -1,0 +1,42 @@
+{% extends '@search/base.html.twig' %}
+
+{% block body %}
+
+    <h1>Book-Search</h1>
+
+
+    <form method="post" action="{{ path('search_create_book') }}">
+        <label for="isbn">ISBN:</label>
+        <input type="text" id="isbn" name="isbn" required>
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <button class="btn btn-primary m-2" type="submit">Create book</button>
+    </form>
+
+    <hr>
+    <form method="get" action="{{ path('search_book_overview') }}">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <button class="btn btn-primary m-2" type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    <p>Results:</p>
+    {% if results is not empty %}
+        <ul>
+            {% for result in results %}
+                <li>{{ result.id }} | {{ result.title }} | <a
+                            href="{{ path('search_search_detail', {'id': result.id}) }}">Show details
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+
+{% endblock %}

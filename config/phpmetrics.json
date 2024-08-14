@@ -1,0 +1,65 @@
+{
+  "includes": [
+    "../src"
+  ],
+  "excludes": [
+    "../tests",
+    "Persistence/Migrations"
+  ],
+  "extensions": [
+    "php",
+    "php8"
+  ],
+  "report": {
+    "html": "../build/phpmetrics/",
+    "violations": "../build/logs/phpmetrics.violations.xml"
+  },
+  "groups": [
+    {
+      "name": "Common",
+      "match": "!common!i"
+    },
+    {
+      "name": "Loan",
+      "match": "!loan!"
+    },
+    {
+      "name": "Search",
+      "match": "!search!i"
+    }
+  ],
+  "plugins": {
+    "git": {
+      "binary": "git"
+    }
+  },
+  "searches": {
+    "Repository which uses Service": {
+      "type": "class",
+      "instanceOf": [
+        "App\\MyRepository"
+      ],
+      "nameMatches": ".*Repository.*",
+      "usesClasses": [
+        ".*Service"
+      ],
+      "failIfFound": true
+    },
+    "Class with too complex code": {
+      "type": "class",
+      "ccnMethodMax": ">=7",
+      "failIfFound": true
+    },
+    "Class with too much lines": {
+      "type": "class",
+      "lloc": ">=500",
+      "failIfFound": true
+    },
+    "Class with too many responsabilitites": {
+      "type": "class",
+      "lcom": ">=5",
+      "failIfFound": true
+    }
+  }
+}
+

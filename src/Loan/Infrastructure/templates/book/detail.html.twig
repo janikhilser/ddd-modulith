@@ -1,0 +1,30 @@
+{% extends '@loan/base.html.twig' %}
+
+{% block body %}
+    <p>Id: {{ book.id }}</p>
+    <p>Isbn: {{ book.isbn }}</p>
+    <p>
+        <a href="{{ path('search_detail_by_isbn', {'isbn': book.isbn}) }}">Show details for publication</a>
+    </p>
+
+    <h2>Loans:</h2>
+    {% if book.loans is not empty %}
+        <ul>
+            {% for loan in book.loans %}
+                <li>{{ loan.id }} | {{ loan.returned  ? 'Returned' : 'Borrowed' }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No loans found.</p>
+    {% endif %}
+
+
+    <form method="post" action="{{ path('loan_book_borrow', {'id': book.id}) }}">
+        <button class="btn btn-primary m-2" type="submit">Borrow</button>
+    </form>
+
+    <form method="post" action="{{ path('loan_book_return', {'id': book.id}) }}">
+        <button class="btn btn-secondary m-2" type="submit">Return</button>
+    </form>
+
+{% endblock %}

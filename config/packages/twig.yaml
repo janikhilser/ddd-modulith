@@ -1,0 +1,10 @@
+twig:
+  form_themes: [ 'bootstrap_5_layout.html.twig' ]
+  paths:
+    '%kernel.project_dir%/src/Common/Infrastructure/templates': common
+    '%kernel.project_dir%/src/Search/Infrastructure/templates': search
+    '%kernel.project_dir%/src/Loan/Infrastructure/templates': loan
+
+when@test:
+  twig:
+    strict_variables: true

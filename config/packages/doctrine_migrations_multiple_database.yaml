@@ -1,0 +1,21 @@
+doctrine_migrations_multiple_database:
+  entity_managers:
+    common:
+      migrations_paths:
+        App\Common\Infrastructure\Persistence\Migrations: '%kernel.project_dir%/src/Common/Infrastructure/Persistence/Migrations'
+    search:
+      migrations_paths:
+        App\Search\Infrastructure\Persistence\Migrations: '%kernel.project_dir%/src/Search/Infrastructure/Persistence/Migrations'
+    loan:
+      migrations_paths:
+        App\Loan\Infrastructure\Persistence\Migrations: '%kernel.project_dir%/src/Loan/Infrastructure/Persistence/Migrations'
+
+when@test:
+  doctrine_migrations_multiple_database:
+    entity_managers:
+      test_module_1:
+      #                migrations_paths:
+      #                    App\Search\Infrastructure\Persistence\Migrations: '%kernel.project_dir%/src/Search/Infrastructure/Persistence/Migrations'
+      test_module_2:
+#                migrations_paths:
+#                    App\Search\Infrastructure\Persistence\Migrations: '%kernel.project_dir%/src/Search/Infrastructure/Persistence/Migrations'

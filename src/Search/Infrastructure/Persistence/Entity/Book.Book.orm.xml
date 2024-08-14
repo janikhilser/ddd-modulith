@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Search\Domain\Book\Book">
+        <id name="id" type="search_book_id"/>
+        <many-to-many field="isbns" target-entity="App\Search\Domain\Book\ValueObject\Isbn">
+            <join-table name="book_isbns">
+                <join-columns>
+                    <join-column name="book_id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="isbn_id" unique="true"/>
+                </inverse-join-columns>
+            </join-table>
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </many-to-many>
+
+        <embedded name="title" class="App\Search\Domain\Book\ValueObject\Title"/>
+    </entity>
+
+</doctrine-mapping>

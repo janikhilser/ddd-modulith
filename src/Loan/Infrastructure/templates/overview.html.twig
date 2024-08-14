@@ -1,0 +1,13 @@
+{% extends '@loan/base.html.twig' %}
+
+{% block title %}Loan!{% endblock %}
+
+{% block body %}
+
+    <h1>Loan</h1>
+    <ul>
+        <li> <a href="{{ path('loan_book_overview') }}">Books</a></li>
+        <li> <a href="{{ path('loan_publication_overview') }}">Publications</a></li>
+    </ul>
+
+{% endblock %}

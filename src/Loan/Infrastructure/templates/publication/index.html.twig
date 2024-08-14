@@ -1,0 +1,20 @@
+{% extends '@loan/base.html.twig' %}
+
+{% block body %}
+    <div id="publication">
+        <h1>Loan</h1>
+
+
+        <p>Publications:</p>
+        {% if publications is not empty %}
+            <ul>
+                {% for publication in publications %}
+                    <li>{{ publication.id }} | {{ publication.isbn }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No publications found.</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

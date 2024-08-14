@@ -1,0 +1,27 @@
+parameters:
+
+services:
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  _instanceof:
+    App\Common\Application\Query\IQueryHandler:
+      tags:
+        - { name: messenger.message_handler, bus: query.bus }
+    App\Common\Application\Command\ICommandHandler:
+      tags:
+        - { name: messenger.message_handler, bus: command.bus }
+    App\Common\Application\Event\IIntegrationEventHandler:
+      tags:
+        - { name: messenger.message_handler, bus: integration.event.bus }
+    App\Common\Application\Event\IDomainEventHandler:
+      tags:
+        - { name: messenger.message_handler, bus: domain.event.bus }
+
+
+  App\Tests\TestData\:
+    resource: '../tests/TestData/'
+  DataFixtures\:
+    resource: '../tests/DataFixtures/'
+

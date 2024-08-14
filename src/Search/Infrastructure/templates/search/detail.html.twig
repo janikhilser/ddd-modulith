@@ -1,0 +1,31 @@
+{% extends '@search/base.html.twig' %}
+
+{% block body %}
+    <h1>Book {{ book.title }}</h1>
+    <p>ID: {{ book.id }}</p>
+
+    <h2>ISBNs:</h2>
+    {% if book.isbns is not empty %}
+        <ul>
+            {% for isbn in book.isbns %}
+                <li>{{ isbn }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No isbns found.</p>
+    {% endif %}
+    <div class="row">
+        <div class="col-2">
+            <form method="post" action="{{ path('search_add_isbn', {'id': book.id}) }}">
+                <div class="mb-3">
+                    <label for="isbn" class="form-label">ISBN:</label>
+                    <input type="text" id="isbn" class="form-control" name="isbn" required>
+                </div>
+                <button class="btn btn-primary" type="submit">Add ISBN</button>
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock %}
